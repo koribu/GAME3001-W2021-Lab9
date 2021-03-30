@@ -37,9 +37,9 @@ void PlayScene::update()
 {
 	updateDisplayList();
 
-	m_CheckShipLOS(m_pTarget);
+	m_CheckAgentLOS(m_pShip, m_pTarget);
 
-	//m_pHasLOSCondition->SetCondition(m_pShip->hasLOS());
+	m_CheckPathNodeLOS();
 }
 
 void PlayScene::clean()
@@ -75,8 +75,10 @@ void PlayScene::handleEvents()
 	{
 	}
 
-	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_G))
+	if (EventManager::Instance().isKeyUp(SDL_SCANCODE_G))
 	{
+		m_gridVisible = !m_gridVisible;
+		m_toggleGrid(m_gridVisible);
 	}
 	
 }
@@ -85,6 +87,8 @@ void PlayScene::start()
 {
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
+	
+	m_gridVisible = false;
 
 	m_buildGrid();
 	
@@ -132,6 +136,14 @@ void PlayScene::GUI_Function()
 	
 	ImGui::Begin("GAME3001 - Lab 7", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
 
+	static bool gridVisible = false;
+	if(ImGui::Checkbox("Toggle Grid", &gridVisible))
+	{
+		m_toggleGrid(gridVisible);
+	}
+
+
+	ImGui::Separator();
 	// allow ship rotation
 	static int angle;
 	if(ImGui::SliderInt("Ship Direction", &angle, -360, 360))
@@ -181,33 +193,7 @@ void PlayScene::GUI_Function()
 	ImGui::StyleColorsDark();
 }
 
-void PlayScene::m_CheckShipLOS(DisplayObject* target_object)
-{
-	// if ship to target distance is less than or equal to LOS Distance
-	auto ShipToTargetDistance = Util::distance(m_pShip->getTransform()->position, target_object->getTransform()->position);
-	if (ShipToTargetDistance <= m_pShip->getLOSDistance())
-	{
-		std::vector<DisplayObject*> contactList;
-		for (auto object : getDisplayList())
-		{
-			// check if object is farther than than the target
-			auto ShipToObjectDistance = Util::distance(m_pShip->getTransform()->position, object->getTransform()->position);
 
-			if (ShipToObjectDistance <= ShipToTargetDistance)
-			{
-				if ((object->getType() != m_pShip->getType()) && (object->getType() != target_object->getType()))
-				{
-					contactList.push_back(object);
-				}
-			}
-		}
-		contactList.push_back(target_object); // add the target to the end of the list
-		auto hasLOS = CollisionManager::LOSCheck(m_pShip->getTransform()->position,
-			m_pShip->getTransform()->position + m_pShip->getCurrentDirection() * m_pShip->getLOSDistance(), contactList, target_object);
-
-		m_pShip->setHasLOS(hasLOS);
-	}
-}
 
 void PlayScene::m_buildStateMachine()
 {
@@ -272,5 +258,52 @@ void PlayScene::m_buildGrid()
 			addChild(pathNode);
 			m_pGrid.push_back(pathNode);
 		}
+	}
+}
+
+void PlayScene::m_CheckAgentLOS(Agent* agent, DisplayObject* object)
+{
+	// if agent to object distance is less than or equal to LOS Distance
+	auto AgentToObjectDistance = Util::distance(agent->getTransform()->position, object->getTransform()->position);
+	if (AgentToObjectDistance <= agent->getLOSDistance())
+	{
+		std::vector<DisplayObject*> contactList;
+		for (auto display_object : getDisplayList())
+		{
+			// check if obstacle is farther than than the object
+			auto AgentToObstacleDistance = Util::distance(agent->getTransform()->position, display_object->getTransform()->position);
+
+			if (AgentToObstacleDistance <= AgentToObjectDistance)
+			{
+				if ((display_object->getType() != agent->getType()) && (display_object->getType() != object->getType()))
+				{
+					contactList.push_back(display_object);
+				}
+			}
+		}
+		contactList.push_back(object); // add the object to the end of the list
+		auto hasLOS = CollisionManager::LOSCheck(agent->getTransform()->position,
+			agent->getTransform()->position + agent->getCurrentDirection() * agent->getLOSDistance(), contactList, object);
+
+		agent->setHasLOS(hasLOS);
+	}
+}
+
+void PlayScene::m_CheckPathNodeLOS()
+{
+	for (auto path_node : m_pGrid)
+	{
+		auto targetDirection = m_pTarget->getTransform()->position - path_node->getTransform()->position;
+		auto normalizedDirection = Util::normalize(targetDirection);
+		path_node->setCurrentDirection(normalizedDirection);
+		m_CheckAgentLOS(path_node, m_pTarget);
+	}
+}
+
+void PlayScene::m_toggleGrid(bool state)
+{
+	for (auto path_node : m_pGrid)
+	{
+		path_node->setVisible(state);
 	}
 }
