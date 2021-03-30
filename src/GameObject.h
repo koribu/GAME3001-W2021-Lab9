@@ -41,6 +41,9 @@ public:
 	void setEnabled(bool state);
 	bool isEnabled() const;
 
+	void setVisible(bool state);
+	bool isVisible() const;
+
 private:
 	// transform component
 	Transform m_transform;
@@ -54,6 +57,7 @@ private:
 	GameObjectType m_type;
 
 	bool m_enabled;
+	bool m_visible;
 };
 
 #endif /* defined (__GAME_OBJECT__) */

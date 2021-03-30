@@ -89,13 +89,14 @@ void Scene::updateDisplayList()
 void Scene::drawDisplayList()
 {
 	std::sort(m_displayList.begin(), m_displayList.end(), sortObjects);
-	for (auto& count : m_displayList)
+	for (auto& display_Object : m_displayList)
 	{
-		if (count != nullptr)
+		if (display_Object != nullptr)
 		{
-			if (!count->isEnabled())
-				break;
-			count->draw();
+			if (display_Object->isEnabled()&&display_Object->isVisible())
+			{
+				display_Object->draw();
+			}
 		}
 	}
 

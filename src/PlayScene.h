@@ -9,6 +9,7 @@
 #include "FloatCondition.h"
 #include "Label.h"
 #include "Obstacle.h"
+#include "PathNode.h"
 #include "ship.h"
 #include "SpaceShip.h"
 #include "StateMachine.h"
@@ -52,6 +53,8 @@ private:
 	
 	StateMachine* m_pStateMachine;
 	void m_buildStateMachine();
+
+	PathNode* m_pPathNode;
 };
 
 

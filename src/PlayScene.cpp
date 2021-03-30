@@ -39,8 +39,7 @@ void PlayScene::update()
 
 	m_CheckShipLOS(m_pTarget);
 
-	m_pHasLOSCondition->SetCondition(m_pShip->hasLOS());
-	m_pStateMachine->Update();
+	//m_pHasLOSCondition->SetCondition(m_pShip->hasLOS());
 }
 
 void PlayScene::clean()
@@ -101,21 +100,22 @@ void PlayScene::start()
 	m_pObstacle2 = new Obstacle();
 	m_pObstacle2->getTransform()->position = glm::vec2(400.0f, 100.0f);
 	addChild(m_pObstacle2);
+	m_pObstacle2->setVisible(false);
 
 	// add the Obstacle to the scene as a start point
 	m_pObstacle3 = new Obstacle();
 	m_pObstacle3->getTransform()->position = glm::vec2(600.0f, 500.0f);
 	addChild(m_pObstacle3);
+	m_pObstacle3->setVisible(false);
 	
 	// added the target to the scene a goal
 	m_pTarget = new Target();
 	m_pTarget->getTransform()->position = glm::vec2(600.0f, 300.0f);
 	addChild(m_pTarget);
 
-
-	// test StateMachine
-	m_buildStateMachine();
-
+	m_pPathNode = new PathNode();
+	m_pPathNode->getTransform()->position = glm::vec2(400, 100);
+	addChild(m_pPathNode);
 }
 
 void PlayScene::GUI_Function() 

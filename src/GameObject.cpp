@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject():
-	m_width(0), m_height(0), m_type(NONE), m_enabled(true)
+	m_width(0), m_height(0), m_type(NONE), m_enabled(true),m_visible(true)
 {
 }
 
@@ -56,4 +56,14 @@ void GameObject::setEnabled(const bool state)
 bool GameObject::isEnabled() const
 {
 	return m_enabled;
+}
+
+void GameObject::setVisible(bool state)
+{
+	m_visible = state;
+}
+
+bool GameObject::isVisible() const
+{
+	return m_visible;
 }

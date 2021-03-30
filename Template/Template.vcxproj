@@ -177,6 +177,7 @@
     <ClCompile Include="..\src\MoveToPlayerAction.cpp" />
     <ClCompile Include="..\src\NavigationObject.cpp" />
     <ClCompile Include="..\src\Obstacle.cpp" />
+    <ClCompile Include="..\src\PathNode.cpp" />
     <ClCompile Include="..\src\Patrol.cpp" />
     <ClCompile Include="..\src\PatrolAction.cpp" />
     <ClCompile Include="..\src\RadiusCondition.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="..\src\NavigationObject.h" />
     <ClInclude Include="..\src\NeighbourTile.h" />
     <ClInclude Include="..\src\Obstacle.h" />
+    <ClInclude Include="..\src\PathNode.h" />
     <ClInclude Include="..\src\Patrol.h" />
     <ClInclude Include="..\src\PatrolAction.h" />
     <ClInclude Include="..\src\RadiusCondition.h" />
