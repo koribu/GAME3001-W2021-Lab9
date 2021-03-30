@@ -75,7 +75,7 @@ void PlayScene::handleEvents()
 	{
 	}
 
-	if (EventManager::Instance().isKeyUp(SDL_SCANCODE_G))
+	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_G))
 	{
 		m_gridVisible = !m_gridVisible;
 		m_toggleGrid(m_gridVisible);
@@ -105,14 +105,14 @@ void PlayScene::start()
 	// add the Obstacle to the scene as a start point
 	m_pObstacle2 = new Obstacle();
 	m_pObstacle2->getTransform()->position = glm::vec2(400.0f, 100.0f);
-//	addChild(m_pObstacle2);
-	m_pObstacle2->setEnabled(false);
+	addChild(m_pObstacle2);
+//	m_pObstacle2->setEnabled(false);
 
 	// add the Obstacle to the scene as a start point
 	m_pObstacle3 = new Obstacle();
 	m_pObstacle3->getTransform()->position = glm::vec2(600.0f, 500.0f);
-//	addChild(m_pObstacle3);
-	m_pObstacle3->setEnabled(false);
+	addChild(m_pObstacle3);
+	//m_pObstacle3->setEnabled(false);
 	
 	// added the target to the scene a goal
 	m_pTarget = new Target();
