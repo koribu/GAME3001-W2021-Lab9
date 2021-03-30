@@ -23,9 +23,9 @@ PathNode::~PathNode()
 
 void PathNode::draw()
 {
-	// draw debug
-	Util::DrawRect(getTransform()->position - glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f), 
-		Config::TILE_SIZE, Config::TILE_SIZE);
+	// draw debug tile for positioning
+	//Util::DrawRect(getTransform()->position - glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f), 
+	//	Config::TILE_SIZE, Config::TILE_SIZE);
 	
 	// Draw Node
 	Util::DrawRect(getTransform()->position - glm::vec2(5, 5), getWidth(), getHeight(),getLOSColour());

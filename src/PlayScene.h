@@ -54,7 +54,8 @@ private:
 	StateMachine* m_pStateMachine;
 	void m_buildStateMachine();
 
-	PathNode* m_pPathNode;
+	std::vector<PathNode*> m_pGrid;
+	void m_buildGrid();
 };
 
 
