@@ -95,7 +95,7 @@ void PlayScene::start()
 	// add the ship to the scene as a start point
 	m_pShip = new Ship();
 	m_pShip->getTransform()->position = glm::vec2(200.0f, 300.0f);
-	addChild(m_pShip, 2);
+	//addChild(m_pShip, 2);
 
 	// add the Obstacle to the scene as a start point
 	m_pObstacle1 = new Obstacle();
@@ -105,13 +105,13 @@ void PlayScene::start()
 	// add the Obstacle to the scene as a start point
 	m_pObstacle2 = new Obstacle();
 	m_pObstacle2->getTransform()->position = glm::vec2(400.0f, 100.0f);
-	addChild(m_pObstacle2);
+//	addChild(m_pObstacle2);
 	m_pObstacle2->setEnabled(false);
 
 	// add the Obstacle to the scene as a start point
 	m_pObstacle3 = new Obstacle();
 	m_pObstacle3->getTransform()->position = glm::vec2(600.0f, 500.0f);
-	addChild(m_pObstacle3);
+//	addChild(m_pObstacle3);
 	m_pObstacle3->setEnabled(false);
 	
 	// added the target to the scene a goal
